@@ -28,6 +28,18 @@ class Pizza
         return @cells[x + y * width].cellTaken
     end
 
+    def getPossibleSliceDimensions
+
+        possibleSliceDimensions = []
+        for j in (@l * 2)..@h 
+            for i in 1..j
+                possibleSliceDimensions << [i, j / i] if (j % i) == 0 
+            end
+        end        
+        return possibleSliceDimensions
+
+    end
+
     def takeSlice(rowStart, rowEnd, colStart, colEnd)
 
         return [] if rowStart > rowEnd
@@ -36,6 +48,8 @@ class Pizza
         return [] if colStart > colEnd
         return [] if colStart < 0 || colStart > (height - 1)
         return [] if colEnd < 0 || colEnd > (height - 1)
+
+        return [] if (rowEnd - rowStart + 1) * (colEnd - colStart + 1) > @h
 
         numTomato = 0
         numMushroom = 0
@@ -55,7 +69,6 @@ class Pizza
             end
         end
 
-        return [] if sliceCells.length > @h
         return [] if numTomato < @l || numMushroom < @l
 
         sliceCells.each { |cell| cell.takeCell }
@@ -66,8 +79,10 @@ class Pizza
 
 end
 
-# pizza = Pizza.new(2, 2, 1, 4, ["MM", "MT"])
+# pizza = Pizza.new(2, 2, 2, 6, ["MM", "MT"])
 # puts pizza.inspect
+
+# puts pizza.getPossibleSliceDimensions.inspect
 
 # puts pizza.takeSlice(0, 1, 0, 0).inspect
 
