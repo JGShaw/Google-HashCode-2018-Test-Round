@@ -25,12 +25,9 @@ pizza_h = numbers[3]
 
 pizza = Pizza.new(pizza_width, pizza_height, pizza_l, pizza_h, lines)
 
-puts pizza.inspect
-
 slices = []
 
 #Solve it!!!!
-
 
 fileName = File.basename(ARGV[0], File.extname(ARGV[0]))
 
@@ -38,7 +35,17 @@ File.open("outputs/%s.out" % [fileName], 'w') { |file|
 	
 	file.puts slices.length
 
+	cellsUsed = 0
+
 	slices.each do |slice|
+
+		cellsUsed += (slice.row_end - slice.row_start + 1) * (slice.col_end - slice.col_start + 1)
+
 		file.puts slice.to_s
+
 	end
+
+	numCells = pizza_width * pizza_height
+	puts "Out of a maximum %d cells, you have used %d cells" % [numCells, cellsUsed]
+	puts "Percentage use: %f" % [cellsUsed.to_f / numCells * 100]
 }
