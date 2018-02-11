@@ -1,5 +1,5 @@
 class Slice
-  attr_reader :row_start, :col_start, :row_end :col_end
+  attr_reader :row_start, :col_start, :row_end, :col_end
   
   def intialize row_start, col_start, row_end, col_end
     @row_start = row_start
